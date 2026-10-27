@@ -1,0 +1,32 @@
+---
+description: ConsumeView layer boundaries — domain vs infra vs UI
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# ConsumeView architecture
+
+## Domain (Rust, pure) — `src-tauri/src/domain/`
+
+- Model prefix routing (`grok-*` → xAI, `gemini-*` → Google OpenAI-compatible)
+- Cost calculation from `pricing.json`
+- Aggregates (today / week / month), TTFT, tok/s, month-end cost projection
+- **No** network, filesystem, keyring, or UI I/O
+
+## Infra (Rust) — `proxy/`, `db/`, `secrets/`
+
+- Axum proxy bound to `127.0.0.1:4000` only
+- SSE stream tap, rusqlite WAL `metrics.db`, OS keyring, Tauri `token-logged` events
+
+## UI (React) — `src/`
+
+- Presentation and user intentions only (session switch, paste keys, period filters)
+- **No** pricing formulas or routing logic in the frontend — call Tauri commands
+
+## User rules
+
+- Real API keys never leave the local app (never to Cursor)
+- Proxy listens on localhost only
+- Active session must be explicit
+- Closing the window minimizes to tray by default while the proxy keeps running

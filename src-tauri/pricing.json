@@ -1,0 +1,29 @@
+{
+  "models": {
+    "gemini-2.0-flash": {
+      "input": 0.1,
+      "output": 0.4,
+      "cached": 0.025
+    },
+    "gemini-1.5-pro": {
+      "input": 1.25,
+      "output": 5.0,
+      "cached": 0.3125
+    },
+    "gemini-1.5-flash": {
+      "input": 0.075,
+      "output": 0.3,
+      "cached": 0.01875
+    },
+    "grok-2": {
+      "input": 2.0,
+      "output": 10.0,
+      "cached": 0.5
+    },
+    "grok-2-mini": {
+      "input": 0.1,
+      "output": 0.2,
+      "cached": 0.025
+    }
+  }
+}

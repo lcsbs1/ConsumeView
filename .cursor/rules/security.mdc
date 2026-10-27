@@ -1,0 +1,13 @@
+---
+description: ConsumeView security — API keys and localhost binding
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# Security rules
+
+- Never send real Gemini / xAI API keys to Cursor, chat logs, or remote services.
+- Store secrets only via the OS keyring (`src-tauri/src/secrets/`) or the local `0600` fallback file in the app data directory.
+- The Axum proxy must bind to `127.0.0.1` only — never `0.0.0.0`.
+- Frontend may show key *status* (set / missing), never echo stored secret values back into the UI.
